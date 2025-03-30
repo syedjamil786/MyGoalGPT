@@ -1,8 +1,8 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "MyGoalGPT Actions",
-    "description": "Secure GPT access to Microsoft Excel file on OneDrive via Microsoft Graph API",
+    "title": "MyGoalGPT - Log Expense",
+    "description": "Logs expenses to the FinancialPlanner Excel file in OneDrive via Microsoft Graph API.",
     "version": "1.0.0"
   },
   "servers": [
@@ -11,21 +11,10 @@
     }
   ],
   "paths": {
-    "/me/drive/items/{fileId}/workbook/worksheets('ExpenseLog')/tables/add": {
+    "/me/drive/items/E9DE8978C59B8B0!s67500d1ad97142ae8c4c09f729072f7a/workbook/worksheets('ExpenseLog')/tables/add": {
       "post": {
         "operationId": "logExpense",
-        "summary": "Add a row to the ExpenseLog sheet in the financial planner",
-        "parameters": [
-          {
-            "name": "fileId",
-            "in": "path",
-            "required": true,
-            "description": "The ID of the Excel file",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "summary": "Log a new expense to the ExpenseLog worksheet",
         "requestBody": {
           "required": true,
           "content": {
