@@ -1,0 +1,95 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "MyGoalGPT Actions",
+    "description": "Secure GPT access to Microsoft Excel file on OneDrive via Microsoft Graph API",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://graph.microsoft.com/v1.0"
+    }
+  ],
+  "paths": {
+    "/me/drive/items/{fileId}/workbook/worksheets('ExpenseLog')/tables/add": {
+      "post": {
+        "operationId": "logExpense",
+        "summary": "Add a row to the ExpenseLog sheet in the financial planner",
+        "parameters": [
+          {
+            "name": "fileId",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the Excel file",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "values": {
+                    "type": "array",
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "values": [
+                    [
+                      "2025-03-30",
+                      "Groceries",
+                      "25",
+                      "Bought vegetables"
+                    ]
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Row added successfully"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "oauth2": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://login.microsoftonline.com/722ea0be-3e1c-4b11-ad6f-9401d6856e24/oauth2/v2.0/authorize",
+            "tokenUrl": "https://login.microsoftonline.com/722ea0be-3e1c-4b11-ad6f-9401d6856e24/oauth2/v2.0/token",
+            "scopes": {
+              "https://graph.microsoft.com/User.Read": "Read user profile",
+              "https://graph.microsoft.com/Files.ReadWrite.All": "Read and write all user files",
+              "offline_access": "Maintain access to data you have given it access to"
+            }
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "oauth2": [
+        "https://graph.microsoft.com/User.Read",
+        "https://graph.microsoft.com/Files.ReadWrite.All",
+        "offline_access"
+      ]
+    }
+  ]
+}
